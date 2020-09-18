@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css" media="all" />
+    <link rel="stylesheet" href="__CSS__/admin.css"  media="all">
+    <style type="text/css">
+
+        /* tooltip */
+        #tooltip{
+            position:absolute;
+            border:1px solid #ccc;
+            background:#333;
+            padding:2px;
+            display:none;
+            color:#fff;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<div class="tplay-body-div">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">用户管理</li>
+        </ul>
+    </div>
+    <form class="layui-form serch" action="{:url('admin/user/index')}" method="post">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <input type="text" name="keywords" lay-verify="title" autocomplete="off" placeholder="请输入姓名" class="layui-input layui-btn-sm">
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" lay-verify="title" autocomplete="off" placeholder="请输入手机号" class="layui-input layui-btn-sm">
+            </div>
+            <div class="layui-input-inline">
+                <div class="layui-inline">
+                    <select name="level" lay-search="">
+                        <option value="">用户类型</option>
+                        <option value="0">会员</option>
+                        <option value="1">VIP会员</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-input-inline">
+                <div class="layui-inline">
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="create_time_range" autocomplete="off" placeholder="注册时间" name="create_time_range">
+                    </div>
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-danger layui-btn-sm" lay-submit="" lay-filter="serch">立即提交</button>
+        </div>
+    </form>
+    <table class="layui-table" lay-size="sm">
+        <colgroup>
+            <col width="50">
+            <col width="80">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="100">
+            <col width="80">
+            <col width="80">
+            <col width="100">
+            <col width="100">
+        </colgroup>
+        <thead>
+        <tr>
+            <th>头像</th>
+            <th>微信昵称</th>
+            <th>用户名</th>
+            <th>已认证车辆</th>
+            <th>手机</th>
+            <th>积分</th>
+            <th>会员系数</th>
+            <th>维修记录</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="user" id="vo"}
+        <tr>
+            <td><img src="{$vo.avatar}" width="20" height="20"></td>
+            <td>{$vo.nickname}</td>
+            <td>{$vo.realname}</td>
+            <td><a href="/admin/member/index.shtml?openid={$vo.openid}">{$vo.level}</a></td>
+            <td>{$vo.phone}</td>
+            <td>{$vo.credit2}</td>
+            <td>{$vo.coefficient}</td>
+            <td>
+                <a href="/admin/serviceorder/index.shtml?uid={$vo.id}">{$vo.servicenum}次</a>
+            </td>
+            <td>{$vo.create_at|date="Y-m-d H:i:s",###}</td>
+            <td class="operation-menu">
+                <div class="layui-btn-group">
+                    <a href="{:url('user/publish',['id'=>$vo.id])}" class="layui-btn layui-btn-xs a_menu layui-btn-primary" id="{$vo.id}" style="margin-right: 0;font-size:12px;"><i class="layui-icon"></i></a>
+                    <a class="layui-btn layui-btn-xs layui-btn-primary delete" id="{$vo.id}" style="margin-right: 0;font-size:12px;"><i class="layui-icon"></i></a>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div style="padding:0 20px;">{$page}</div>
+
+    {include file="public/foot"}
+
+    <script type="text/javascript">
+
+        $('.delete').click(function(){
+            var id = $(this).attr('id');
+            layer.confirm('确定要删除?', function(index) {
+                $.ajax({
+                    url:"{:url('admin/user/delete')}",
+                    data:{id:id},
+                    success:function(res) {
+                        layer.msg(res.msg);
+                        if(res.code == 1) {
+                            setTimeout(function(){
+                                location.href = res.url;
+                            },1500)
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+</div>
+</body>
+</html>

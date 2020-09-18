@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css" media="all" />
+    <link rel="stylesheet" href="__CSS__/admin.css"  media="all">
+
+    <style>
+        .layui-form-label {
+            whidth:200px;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<div class="tplay-body-div">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li><a href="{:url('admin/order/index')}" class="a_menu">订单列表</a></li>
+        </ul>
+    </div>
+    <div style="margin-top: 20px;">
+    </div>
+    <form class="layui-form" id="admin">
+        <div class="layui-form-item">
+            <label class="layui-form-label">订单号:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.ordersn}" autocomplete="off" class="layui-input" type="text">
+            </div>
+            <label class="layui-form-label">订单状态:</label>
+            <div class="layui-input-inline">
+                {if $order.status==0}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="订单待确认" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==1}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="等待到达门店" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==2}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="门店报价待审核" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==3}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="用户待付款" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==4}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="门店维修中" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==5}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="维修完毕待打款" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==3}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="已完成" autocomplete="off" class="layui-input" type="text">
+                {elseif $order.status==-1}
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="订单已驳回" autocomplete="off" class="layui-input" type="text">
+                {/if}
+            </div>
+        </div>
+        <div class="layui-form-item">
+
+            <label class="layui-form-label" >门店:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.storeid}" autocomplete="off" class="layui-input" type="text">
+            </div>
+            <label class="layui-form-label">付款方式:</label>
+            <div class="layui-input-inline">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.pay}" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">买家:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.uname}" autocomplete="off" class="layui-input" type="text">
+            </div>
+            <label class="layui-form-label">订单总价:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.price}" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.uphone}" autocomplete="off" class="layui-input" type="text">
+            </div>
+            <label class="layui-form-label">实付金额:</label>
+            <div class="layui-input-inline">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.totalprice}" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" >预约时间:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.appointmenttime|date="Y-m-d H:i:s",###}" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        {if !empty($order.remarks)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注:</label>
+            <div class="layui-input-inline" style="width:40%;">
+                <input  style="outline:none;border: 0;background-color: rgba(0, 0, 0, 0);" disabled =“disabled” lay-verify="required" value="{$order.remarks}" autocomplete="off" class="layui-input" type="text">
+            </div>
+        </div>
+        {/if}
+        {if !empty($order.userimgs)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">认证车辆:</label>
+            <div class="layui-input-inline" style="width:80%;">
+                <div class="layui-upload-list">
+                    {volist name="order.car_img" id="car_img"}
+                    <a href="{$car_img}"><img class="layui-upload-img" id="demo1" width="100px" height="100px" src="{$car_img}"></a>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        {/if}
+        {if !empty($order.userimgs)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户申请:</label>
+            <div class="layui-input-inline" style="width:80%;">
+                <div class="layui-upload-list">
+                    {volist name="order.userimgs" id="userimg"}
+                    <a href="{$userimg}"><img class="layui-upload-img" id="demo1" width="100px" height="100px" src="{$userimg}"></a>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        {/if}
+        {if !empty($order.storeimgs)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">维修前:</label>
+            <div class="layui-input-inline" style="width:80%;">
+                <div class="layui-upload-list">
+                    {volist name="order.storeimgs" id="storeimg"}
+                    <a href="{$storeimg}"><img class="layui-upload-img" id="demo1" width="100px" height="100px" src="{$storeimg}"></a>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        {/if}
+        {if !empty($order.endimgs)}
+        <div class="layui-form-item">
+            <label class="layui-form-label">维修后:</label>
+            <div class="layui-input-inline" style="width:80%;">
+                <div class="layui-upload-list">
+                    {volist name="order.endimgs" id="endimg"}
+                    <a href="{$endimg}"><img class="layui-upload-img" id="demo1" width="100px" height="100px" src="{$endimg}"></a>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+        {/if}
+        <hr class="layui-bg-black">
+        <table class="layui-table" lay-size="sm" style="margin-top: 50px;">
+            <colgroup>
+                <col width="300">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>商品</th>
+                <th>预计价格</th>
+                <th>实付</th>
+                <th>积分</th>
+                <th>消耗会员系数</th>
+                <th>数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="order_goods" id="vo"}
+            <tr>
+                <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <img src="{$vo.img_url}" width="40" height="40">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {$vo.servicename}
+                </td>
+                <td>￥{$vo.price}</td>
+                <td>￥{$order.totalprice}</td>
+                <td>{$vo.integral}</td>
+                <td>{$vo.coefficient}</td>
+                <td>{$vo.servicenum}</td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        {notempty name="$order"}
+        <input type="hidden" name="id" value="{$order.id}">
+        {/notempty}
+
+    </form>
+    {if $order.status==5}
+    <div class="layui-form-item" style="margin-top: 50px;margin-left: 40%;">
+        <div class="layui-input-block">
+            <button class="layui-btn paystore" id="{$order.id}" lay-submit lay-filter="admin">打款</button>
+            <button type="reset" id="{$order.id}" class="layui-btn layui-btn-primary outstatus">驳回</button>
+        </div>
+    </div>
+    {elseif $order.status!=-1 && $order.status!=3 && $order.status!=4 && $order.status!=6}
+    <div class="layui-form-item" style="margin-top: 50px;margin-left: 40%;">
+        <div class="layui-input-block">
+            <button class="layui-btn status" id="{$order.id}" lay-submit lay-filter="admin">通过</button>
+            <button type="reset" id="{$order.id}" class="layui-btn layui-btn-primary outstatus">驳回</button>
+        </div>
+    </div>
+    {/if}
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script src="__PUBLIC__/jquery/jquery.min.js"></script>
+    <script>
+        $('.status').click(function(){
+            var id = $(this).attr('id');
+            layer.confirm('确定要改变该订单的状态?', function(index) {
+                $.ajax({
+                    url:"{:url('admin/serviceorder/status')}",
+                    data:{id:id},
+                    success:function(res) {
+                        layer.msg(res.msg);
+                        if(res.code == 1) {
+                            setTimeout(function(){
+                                location.href = res.url;
+                            },1500)
+                        }
+                    }
+                })
+            })
+        })
+        $('.paystore').click(function(){
+            var id = $(this).attr('id');
+            layer.confirm('确定打款到商家余额?', function(index) {
+                $.ajax({
+                    url:"{:url('admin/serviceorder/paystore')}",
+                    data:{id:id},
+                    success:function(res) {
+                        layer.msg(res.msg);
+                        if(res.code == 1) {
+                            setTimeout(function(){
+                                location.href = res.url;
+                            },1500)
+                        }
+                    }
+                })
+            })
+        })
+        $('.outstatus').click(function(){
+            var id = $(this).attr('id');
+            layer.confirm('确定驳回该订单?订单驳回后该订单将无法操作,请谨慎操作!', function(index) {
+                $.ajax({
+                    url:"{:url('admin/serviceorder/outstatus')}",
+                    data:{id:id},
+                    success:function(res) {
+                        layer.msg(res.msg);
+                        if(res.code == 1) {
+                            setTimeout(function(){
+                                location.href = res.url;
+                            },1500)
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+
+
+    <script>
+        var message;
+        layui.config({
+            base: '__JS__/',
+            version: '1.0.1'
+        }).use(['app', 'message'], function() {
+            var app = layui.app,
+                $ = layui.jquery,
+                layer = layui.layer;
+            //将message设置为全局以便子页面调用
+            message = layui.message;
+            //主入口
+            app.set({
+                type: 'iframe'
+            }).init();
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            var x = 10;
+            var y = 20;
+            $(".tooltip").mouseover(function(e){
+                var tooltip = "<div id='tooltip'><img src='"+ this.href +"' alt='产品预览图' height='200'/>"+"<\/div>"; //创建 div 元素
+                $("body").append(tooltip);  //把它追加到文档中
+                $("#tooltip")
+                    .css({
+                        "top": (e.pageY+y) + "px",
+                        "left":  (e.pageX+x)  + "px"
+                    }).show("fast");    //设置x坐标和y坐标，并且显示
+            }).mouseout(function(){
+                $("#tooltip").remove();  //移除
+            }).mousemove(function(e){
+                $("#tooltip")
+                    .css({
+                        "top": (e.pageY+y) + "px",
+                        "left":  (e.pageX+x)  + "px"
+                    });
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $('.a_menu').click(function(){
+            var url = $(this).attr('href');
+            var id = $(this).attr('id');
+            var a = true;
+            if(id) {
+                $.ajax({
+                    url:url
+                    ,async:false
+                    ,data:{id:id}
+                    ,success:function(res){
+                        if(res.code == 0) {
+                            layer.msg(res.msg);
+                            a = false;
+                        }
+                    }
+                })
+            } else {
+                $.ajax({
+                    url:url
+                    ,async:false
+                    ,success:function(res){
+                        if(res.code == 0) {
+                            layer.msg(res.msg);
+                            a = false;
+                        }
+                    }
+                })
+            }
+            return a;
+        })
+    </script>
+    <script>
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+
+            //常规用法
+            laydate.render({
+                elem: '#create_time'
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

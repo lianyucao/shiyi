@@ -1,0 +1,6 @@
+runtime/*
+*.log
+.idea/*
+vendor/*
+
+public/uploads/

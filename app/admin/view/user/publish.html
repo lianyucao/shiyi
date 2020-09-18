@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="__PUBLIC__/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/font-awesome/css/font-awesome.min.css" media="all" />
+    <link rel="stylesheet" href="__CSS__/admin.css"  media="all">
+    <style>
+        .layui-input[readonly="readonly"] {
+            background: #d2d2d2;
+        }
+        #tooltip{
+            position:absolute;
+            border:1px solid #ccc;
+            background:#333;
+            padding:2px;
+            display:none;
+            color:#fff;
+        }
+    </style>
+</head>
+<body style="padding:10px;">
+<div class="tplay-body-div">
+    <div class="layui-tab">
+        <ul class="layui-tab-title">
+            <li><a href="{:url('admin/user/index')}" class="a_menu">会员管理</a></li>
+        </ul>
+    </div>
+    <div style="margin-top: 20px;">
+    </div>
+    <form class="layui-form" id="admin" style="width: 800px;">
+        <div class="layui-upload" id="upload-thumb">
+            <label class="layui-form-label">头像</label>
+            <div class="layui-upload-list">
+                <img class="layui-upload-img" id="demo1" width="60" height="60" src="{$info.avatar}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">微信昵称</label>
+            <div class="layui-input-block">
+                <input name="nickname" readonly="readonly" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" value="{$info.nickname}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">OPENID</label>
+            <div class="layui-input-block">
+                <input name="openid" readonly="readonly" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" value="{$info.openid}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级ID</label>
+            <div class="layui-input-block">
+                <input name="agentid"  lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" value="{$info.agentid}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block">
+                <input name="realname" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" {notempty name="$info.realname"}value="{$info.realname}"{/notempty}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-block">
+                <input name="phone" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" {notempty name="$info.phone"}value="{$info.phone}"{/notempty}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-block">
+                <input name="address" readonly="readonly" lay-verify="required" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" type="text" {notempty name="$info.address"}value="{$info.address}"{/notempty}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">余额</label>
+            <div class="layui-input-block">
+                <input name="credit1"   placeholder="请输入" autocomplete="off" class="layui-input" type="text" {notempty name="$info.credit1"}value="{$info.credit1}"{/notempty}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">积分</label>
+            <div class="layui-input-block">
+                <input name="credit2"   placeholder="请输入" autocomplete="off" class="layui-input" type="text" {notempty name="$info.credit2"}value="{$info.credit2}"{/notempty}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">会员系数</label>
+            <div class="layui-input-block">
+                <input name="coefficient"  readonly="readonly"  autocomplete="off" class="layui-input" type="text" {notempty name="$info.coefficient"}value="{$info.coefficient}"{/notempty}>
+            </div>
+        </div>
+        {notempty name="$info.member"}
+        <table class="layui-table" lay-size="sm" style="width: 800px;">
+            <colgroup>
+                <col width="50">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+                <col width="100">
+            </colgroup>
+            <thead>
+            <tr style="width: 100000px;">
+                <th>车牌号</th>
+                <th>车型</th>
+                <th>车况</th>
+                <th>驾照</th>
+                <th>到期时间</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {volist name="info.member" id="vo"}
+            <tr>
+                <td>{$vo.car_number}</td>
+                <td>{$vo.model}</td>
+                <td>
+                    {volist name="vo.car_img" id="car"}
+                    <a href="{$car}" class="tooltip"><img src="{$car}" width="20" height="20"></a>
+                    {/volist}
+                </td>
+                <td>
+                    {volist name="vo.license_img" id="license"}
+                    <a href="{$license}" class="tooltip"><img src="{$license}" width="20" height="20"></a>
+                    {/volist}
+                </td>
+                <td>{$vo.end_level|date="Y-m-d",###}</td>
+                <td>{$vo.create_at|date="Y-m-d H:i:s",###}</td>
+                <td><a href="/admin/member/publish.shtml?id={$vo.id}">详情</a></td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        {/notempty}
+        {notempty name="$info"}
+        <input type="hidden" name="id" value="{$info.id}">
+        {/notempty}
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="admin">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+
+    </form>
+
+
+    <script src="__PUBLIC__/layui/layui.js"></script>
+    <script src="__PUBLIC__/jquery/jquery.min.js"></script>
+    <script>
+        var message;
+        layui.config({
+            base: '__JS__/',
+            version: '1.0.1'
+        }).use(['app', 'message'], function() {
+            var app = layui.app,
+                $ = layui.jquery,
+                layer = layui.layer;
+            //将message设置为全局以便子页面调用
+            message = layui.message;
+            //主入口
+            app.set({
+                type: 'iframe'
+            }).init();
+        });
+    </script>
+    <script>
+        layui.use(['layer', 'form'], function() {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                form = layui.form;
+            $(window).on('load', function() {
+                form.on('submit(admin)', function(data) {
+                    $.ajax({
+                        url:"{:url('admin/user/publish')}",
+                        data:$('#admin').serialize(),
+                        type:'post',
+                        async: false,
+                        success:function(res) {
+                            if(res.code == 1) {
+                                layer.alert(res.msg, function(index){
+                                    location.href = res.url;
+                                })
+                            } else {
+                                layer.msg(res.msg);
+                            }
+                        }
+                    })
+                    return false;
+                });
+            });
+        });
+    </script>
+    <script>
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#test19'
+                ,isInitValue: true
+            });
+        });
+        layui.use('layer', function(layer) {
+            showImage = function(url) {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 0, //不显示关闭按钮
+                    anim: 2,
+                    area: ['1080px', '720px'],
+                    shadeClose: true, //开启遮罩关闭
+                    content: '<div style="width: 100%; height: 100%; background: url(' + url + ') center center / contain no-repeat;"></div>'
+                });
+            }
+        });
+    </script>
+</div>
+</body>
+</html>
